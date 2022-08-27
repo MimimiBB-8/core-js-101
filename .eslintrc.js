@@ -19,4 +19,5 @@ module.exports = {
       process.platform === 'win32' ? 'windows' : 'unix',
     ],
   },
+  
 };
