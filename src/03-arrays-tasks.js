@@ -98,7 +98,7 @@ function getArrayOfStrings(arr) {
  *    [ false, 0, NaN, '', undefined ]   => [ ]
  */
 function removeFalsyValues(arr) {
-  return arr.filter((num) => Boolean(num));
+  return arr.filter((elem) => elem);
 }
 
 /**
