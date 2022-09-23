@@ -113,9 +113,7 @@ function removeFalsyValues(arr) {
  *    [ 'a', 'b', 'c', 'd', 'e', 'f', 'g' ]  => [ 'A', 'B', 'C', 'D', 'E', 'F', 'G' ]
  */
 function getUpperCaseStrings(arr) {
-  let arr2 = [];
-  arr2 = arr.map((element) => element.toUpperCase());
-  return arr2;
+  return arr.map((element) => element.toUpperCase());
 }
 
 /**
