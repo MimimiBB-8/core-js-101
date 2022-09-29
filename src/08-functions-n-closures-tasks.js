@@ -5,9 +5,8 @@
  * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function   *
  * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/arguments       *
  * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures                            *
- *                                                                                             *
+ *                                                                                              *
  ********************************************************************************************* */
-
 
 /**
  * Returns the functions composition of two specified functions f(x) and g(x).
@@ -28,7 +27,6 @@ function getComposition(f, g) {
     return f(g(x));
   };
 }
-
 
 /**
  * Returns the math power function with the specified exponent
@@ -52,7 +50,6 @@ function getPowerFunction(exponent) {
   };
 }
 
-
 /**
  * Returns the polynom function of one argument based on specified coefficients.
  * See: https://en.wikipedia.org/wiki/Polynomial#Definition
@@ -66,10 +63,10 @@ function getPowerFunction(exponent) {
  *   getPolynom(8)     => y = 8
  *   getPolynom()      => null
  */
-function getPolynom() {
-  throw new Error('Not implemented');
+function getPolynom(...arg) {
+  return (el) => arg
+    .reduce((acc, value, current) => acc + value * (el ** (arg.length - current - 1)), 0);
 }
-
 
 /**
  * Memoizes passed function and returns function
@@ -97,7 +94,6 @@ function memoize(func) {
   };
 }
 
-
 /**
  * Returns the function trying to call the passed function and if it throws,
  * retrying it specified number of attempts.
@@ -113,10 +109,20 @@ function memoize(func) {
  * }, 2);
  * retryer() => 2
  */
-function retry(/* func, attempts */) {
-  throw new Error('Not implemented');
+function retry(func, attempts) {
+  return () => {
+    for (let i = 0; i < attempts; i += 1) {
+      try {
+        return func();
+      } catch (e) {
+        if (i === attempts - 1) {
+          throw e;
+        }
+      }
+    }
+    return func;
+  };
 }
-
 
 /**
  * Returns the logging wrapper for the specified method,
@@ -142,9 +148,13 @@ function retry(/* func, attempts */) {
  *
  */
 function logger(func, logFunc) {
-  logFunc.apply(console, func);
+  return (...args) => {
+    logFunc(`${func.name}(${args.map((v) => JSON.stringify(v)).join(',')}) starts`);
+    const res = func(...args);
+    logFunc(`${func.name}(${args.map((v) => JSON.stringify(v)).join(',')}) ends`);
+    return res;
+  };
 }
-
 
 /**
  * Return the function with partial applied arguments
@@ -162,7 +172,6 @@ function logger(func, logFunc) {
 function partialUsingArguments(fn, ...args1) {
   return fn.bind(null, ...args1);
 }
-
 
 /**
  * Returns the id generator function that returns next integer starting
@@ -194,7 +203,6 @@ function getIdGeneratorFunction(startFrom) {
     return generator.next().value;
   };
 }
-
 
 module.exports = {
   getComposition,
