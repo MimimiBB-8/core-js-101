@@ -18,6 +18,7 @@ module.exports = {
       'error',
       process.platform === 'win32' ? 'windows' : 'unix',
     ],
+    'no-shadow': "off",
   },
   
 };
